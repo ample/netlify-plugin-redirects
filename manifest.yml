@@ -6,3 +6,6 @@ inputs:
   - name: destination
     description: Relative path to _redirects
     default: ./_redirects
+  - name: defaultBranch
+    description: The default branch for your repo
+    default: master

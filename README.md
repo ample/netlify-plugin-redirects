@@ -26,8 +26,9 @@ ${env:SOME_ENV_VARIABLE}
 
 You can tell the plugin where to source your rules and where to write the parsed redirects via the following options, in your `netlify.toml` file...
 
-- `source`: Specifies the location of your CSV file
-- `destination`: Specifies the file to which the parsed rules will be written
+- `source`: Specifies the location of your CSV file.
+- `destination`: Specifies the file to which the parsed rules will be written.
+- `defaultBranch`: The default branch for your repo. This value is used when context cannot be determined.
 
 The default configuration, if none is specified, is:
 
@@ -37,6 +38,7 @@ The default configuration, if none is specified, is:
   [plugins.inputs]
     source = "./redirects.csv"
     destination = "./_redirects"
+    defaultBranch = "master"
 ```
 
 ## License
