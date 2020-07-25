@@ -1,0 +1,20 @@
+{
+  "name": "netlify-plugin-redirects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "test:watch": "mocha -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "current-git-branch": "^1.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.0.1"
+  }
+}
