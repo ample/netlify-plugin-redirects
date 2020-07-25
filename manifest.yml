@@ -1,2 +1,8 @@
-# manifest.yml
 name: netlify-plugin-redirects
+inputs:
+  - name: source
+    description: Source CSV file containing redirect rules
+    default: ./redirects.csv
+  - name: destination
+    description: Relative path to _redirects
+    default: ./_redirects

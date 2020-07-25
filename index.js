@@ -2,7 +2,7 @@
 const Parser = require("./lib/parser");
 
 module.exports = {
-  onPreBuild: async () => {
-    await new Parser().perform();
+  onPreBuild: async ({ inputs }) => {
+    await new Parser(inputs.source, inputs.destination).perform();
   },
 };
