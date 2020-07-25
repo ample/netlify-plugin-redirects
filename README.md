@@ -1,6 +1,6 @@
 # netlify-plugin-redirects-csv
 
-<img src="https://api.travis-ci.com/ample/netlify-plugin-redirects.svg?branch=main" />
+[![build status](https://api.travis-ci.com/ample/netlify-plugin-redirects.svg)](https://badge.fury.io/js/%40helloample%2Fnetlify-plugin-redirects) [![npm version](https://badge.fury.io/js/%40helloample%2Fnetlify-plugin-redirects.svg)](https://badge.fury.io/js/%40helloample%2Fnetlify-plugin-redirects)
 
 Read a CSV file, parse the rows and write them to `_redirects` _before_ Netlify processes your build.
 
