@@ -4,7 +4,7 @@ Read a CSV file, parse the rows and write them to `_redirects` _before_ Netlify 
 
 ## Why?
 
-Netlify's `_redirects` file does not support environment variables or context. With this build, you can specify environmentally specific redirect rules in a CSV file and then dynamically write those rules to `_redirects` during the build.
+Netlify's `_redirects` file does not support environment variables or context. With this build, you can specify environmentally specific redirect rules in a CSV file and then dynamically write those rules to `_redirects` before your site is deployed.
 
 ## Setup
 
