@@ -7,8 +7,8 @@ module.exports = {
       const parser = new Parser(inputs.source, inputs.destination);
       if (await parser.perform()) {
         const stats = parser.stats();
-        utils.status.show(stats);
         console.log(stats.summary);
+        utils.status.show(stats);
       } else {
         throw new Error("There was a problem.");
       }

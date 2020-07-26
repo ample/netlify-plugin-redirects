@@ -3,9 +3,12 @@ inputs:
   - name: source
     description: Source CSV file containing redirect rules
     default: ./redirects.csv
+    required: true
   - name: destination
     description: Relative path to _redirects
     default: ./_redirects
+    required: true
   - name: defaultBranch
     description: The default branch for your repo
     default: master
+    required: true

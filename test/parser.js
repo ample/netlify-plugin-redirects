@@ -27,10 +27,7 @@ describe("Parser", () => {
     const path = this.parser.dest;
 
     try {
-      if (fs.existsSync(path)) {
-        console.log("delete");
-        fs.unlinkSync(path);
-      }
+      if (fs.existsSync(path)) fs.unlinkSync(path);
     } catch (err) {
       console.error(err);
     }
@@ -38,8 +35,18 @@ describe("Parser", () => {
     assert.equal(fs.existsSync(path), false);
     this.parser.rows = [new Redirect("/a", "/b", "301")];
     this.parser.perform();
-    setTimeout(function() {
+    setTimeout(function () {
       assert.equal(fs.existsSync(path), true);
     }, 1);
+  });
+
+  it("only includes rows that match current context", () => {
+    process.env["CONTEXT"] = "staging";
+    this.parser.rows = [
+      new Redirect("/a", "/b", "301"),
+      new Redirect("/c", "/d", "200", "master"),
+    ];
+    this.parser.perform();
+    assert.equal(this.parser.rowsProcessed.length, 1);
   });
 });
