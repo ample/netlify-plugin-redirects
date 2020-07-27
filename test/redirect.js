@@ -31,7 +31,7 @@ describe("Redirect", () => {
       );
     });
 
-    it("should return abbreviated rule if origin & destination are equal", () => {
+    it("should return abbreviated rule if origin & destination are equal and origin does not end w/ a splat", () => {
       let destination = this.redirect.destination;
       this.redirect.destination = this.redirect.origin;
       assert.equal(
@@ -47,7 +47,7 @@ describe("Redirect", () => {
       );
       assert.equal(
         this.redirect.toString(),
-        "https://www.helloample.com/*\thttps://ample.co/:splat?everThus%3D%2Fto-deadbeats\t301!"
+        "https://www.helloample.com/*\thttps://ample.co/:splat?everThus=%2Fto-deadbeats\t301!"
       );
     });
   });
@@ -61,11 +61,32 @@ describe("Redirect", () => {
     });
   });
 
+  describe("#encodeParam()", () => {
+    it("should only encode certain value chars in key/value pair", () => {
+      assert.equal(
+        this.redirect.encodeParam("everThus=/to-deadbeats"),
+        "everThus=%2Fto-deadbeats"
+      );
+      assert.equal(
+        this.redirect.encodeParam("groupIds=:groupIds/something"),
+        "groupIds=:groupIds%2Fsomething"
+      );
+    });
+  });
+
   describe("#encodeParams()", () => {
     it("should encode query string params", () => {
       assert.equal(
         this.redirect.encodeParams(`https://ample.com/?everThus=/to-deadbeats`),
-        "https://ample.com/?everThus%3D%2Fto-deadbeats"
+        "https://ample.com/?everThus=%2Fto-deadbeats"
+      );
+    });
+    it("should not encode common characters like colon-placeholder", () => {
+      assert.equal(
+        this.redirect.encodeParams(
+          `/signin?redirectUrl=/group-renew&groupIds=:groupIds`
+        ),
+        "/signin?redirectUrl=%2Fgroup-renew&groupIds=:groupIds"
       );
     });
   });
