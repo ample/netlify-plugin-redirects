@@ -31,16 +31,6 @@ describe("Redirect", () => {
       );
     });
 
-    it("should return abbreviated rule if origin & destination are equal and origin does not end w/ a splat", () => {
-      let destination = this.redirect.destination;
-      this.redirect.destination = this.redirect.origin;
-      assert.equal(
-        this.redirect.toString(),
-        "https://www.helloample.com/*\t301!"
-      );
-      this.redirect.destination = destination;
-    });
-
     it("should encode query string parameters", () => {
       this.redirect.destination = this.redirect.encodeParams(
         `${this.redirect.destination}?everThus=/to-deadbeats`
@@ -49,6 +39,81 @@ describe("Redirect", () => {
         this.redirect.toString(),
         "https://www.helloample.com/*\thttps://ample.co/:splat?everThus=%2Fto-deadbeats\t301!"
       );
+    });
+
+    describe("for role-based redirect rules", () => {
+      let origOrigin, origDestination, origStatus;
+
+      beforeEach(() => {
+        origOrigin = this.redirect.origin;
+        origDestination = this.redirect.destination;
+        origStatus = this.redirect.status;
+        this.redirect.status = "200! Role=user";
+      });
+
+      afterEach(() => {
+        this.redirect.origin = origOrigin;
+        this.redirect.destination = origDestination;
+        this.redirect.status = origStatus;
+      });
+
+      describe("with trailing wildcard character on origin", () => {
+        before(() => {
+          this.redirect.origin = "/something/*";
+        });
+
+        describe("and matching routes", () => {
+          before(() => {
+            this.redirect.destination = this.redirect.origin;
+          });
+          it("should abbreviate return value", () => {
+            assert.equal(
+              this.redirect.toString(),
+              "/something/*\t200! Role=user"
+            );
+          });
+        });
+
+        describe("and non-matching routes", () => {
+          it("should not abbreviate return value", () => {
+            this.redirect.destination = "https://www.ample.co/:splat";
+            assert.equal(
+              this.redirect.toString(),
+              "/something/*\thttps://www.ample.co/:splat\t200! Role=user"
+            );
+          });
+        });
+      });
+
+      describe("without trailing wildcard character on origin", () => {
+        describe("and matching routes", () => {
+          describe("with trailing slash", () => {
+            before(() => {
+              this.redirect.origin = "/something/";
+              this.redirect.destination = "/something/";
+            });
+            it("should not abbreviate return value AND should strip trailing slash from both paths", () => {
+              assert.equal(
+                this.redirect.toString(),
+                "/something\t/something\t200! Role=user"
+              );
+            });
+          });
+          describe("without trailing slash", () => {
+            before(() => {
+              this.redirect.origin = "/something";
+              this.redirect.destination = "/something";
+            });
+
+            it("should not abbreviate return value", () => {
+              assert.equal(
+                this.redirect.toString(),
+                "/something\t/something\t200! Role=user"
+              );
+            });
+          });
+        });
+      });
     });
   });
 
