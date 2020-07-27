@@ -24,6 +24,29 @@ When referring to exported environment variables, you need to use the following 
 ${env:SOME_ENV_VARIABLE}
 ```
 
+## Install
+
+Add the plugin to your `package.json` file... 
+
+```
+$ npm i @helloample/netlify-plugin-redirects -D
+```
+
+Create a new file at the root of your project called `redirects.csv` with your redirect rules (see [setup](https://github.com/ample/netlify-plugin-redirects/blob/main/README.md#setup) for more information on formatting your rules)... 
+
+```
+$ echo "/redirect-me,https://ample.co,301!" > ./redirects.csv
+```
+
+And add the plugin to your `netlify.toml` file (see [configuration](https://github.com/ample/netlify-plugin-redirects/blob/main/README.md#configuration) for available options)... 
+
+```
+[[plugins]]
+  package = "@helloample/netlify-plugin-redirects"
+```
+
+Commit &amp; push changes back to your repository. Now go watch the next build on Netlify.  
+
 ## Configuration
 
 You can tell the plugin where to source your rules and where to write the parsed redirects via the following options, in your `netlify.toml` file...
