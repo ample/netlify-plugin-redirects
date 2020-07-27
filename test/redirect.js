@@ -201,4 +201,28 @@ describe("Redirect", () => {
       });
     });
   });
+
+  describe("#scrubString", () => {
+    it("should interpolate ENV variables", () => {
+      process.env["TEMPORARY-STRING-FOR-TESTING"] = "https://ample.co";
+      assert.equal(
+        this.redirect.scrubString("${env:TEMPORARY-STRING-FOR-TESTING}"),
+        process.env["TEMPORARY-STRING-FOR-TESTING"]
+      );
+      delete process.env["TEMPORARY-STRING-FOR-TESTING"];
+    });
+    it("should encode params", () => {
+      assert.equal(
+        this.redirect.scrubString("/path?key=/value&something=:token"),
+        "/path?key=%2Fvalue&something=:token"
+      );
+    });
+    it("should prepend forward-slash if not absolute URL", () => {
+      assert.equal(this.redirect.scrubString("something"), "/something");
+      assert.equal(
+        this.redirect.scrubString("https://ample.co"),
+        "https://ample.co"
+      );
+    });
+  });
 });
