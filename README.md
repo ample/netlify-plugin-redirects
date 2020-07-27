@@ -36,7 +36,7 @@ The default configuration, if none is specified, is:
 
 ```
 [[plugins]]
-  package = "./_plugins/netlify-plugin-redirects"
+  package = "@helloample/netlify-plugin-redirects"
   [plugins.inputs]
     source = "./redirects.csv"
     destination = "./_redirects"
