@@ -9,7 +9,9 @@ describe("Parser", () => {
   before(() => {
     this.parser = new Parser(
       "./test/fixtures/redirects.csv",
-      "./tmp/_redirects"
+      "./tmp/_redirects",
+      "master",
+      {}
     );
   });
 
