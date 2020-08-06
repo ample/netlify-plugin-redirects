@@ -1,6 +1,6 @@
 {
   "name": "@helloample/netlify-plugin-redirects",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Read a CSV file, parse the rows and write them to `_redirects` _before_ Netlify processes your build.",
   "main": "index.js",
   "scripts": {
